@@ -9,9 +9,9 @@ public class Word {
 
     private String mMiwokTranslation;
 
-    public Word(String defaultTranslation, String miwokTranslation) {
-        mDefaultTranslation = defaultTranslation;
+    public Word(String miwokTranslation, String defaultTranslation) {
         mMiwokTranslation = miwokTranslation;
+		mDefaultTranslation = defaultTranslation;
     }
 
     public String getmDefaultTranslation() {
