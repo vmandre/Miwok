@@ -38,22 +38,12 @@ public class WordAdapter extends ArrayAdapter<Word>{
         Word word = getItem(position);
 
         // Find the TextView in the list_item.xml layout with the ID version_name
-        TextView nameTextView = (TextView) listItemView.findViewById(R.id.version_name);
-        // Get the version name from the current AndroidFlavor object and
-        // set this text on the name TextView
-        nameTextView.setText(word.getmDefaultTranslation());
+        TextView miwokTextView = (TextView) listItemView.findViewById(R.id.miwok_text_view);
+        miwokTextView.setText(word.getmMiwokTranslation());
 
         // Find the TextView in the list_item.xml layout with the ID version_number
-        TextView numberTextView = (TextView) listItemView.findViewById(R.id.version_number);
-        // Get the version number from the current AndroidFlavor object and
-        // set this text on the number TextView
-        numberTextView.setText(word.getmMiwokTranslation());
-
-        // Find the ImageView in the list_item.xml layout with the ID list_item_icon
-//        ImageView iconView = (ImageView) listItemView.findViewById(R.id.list_item_icon);
-        // Get the image resource ID from the current AndroidFlavor object and
-        // set the image to iconView
-     //   iconView.setImageResource(currentAndroidFlavor.getImageResourceId());
+        TextView defaultTextView = (TextView) listItemView.findViewById(R.id.default_text_view);
+        defaultTextView.setText(word.getmDefaultTranslation());
 
         // Return the whole list item layout (containing 2 TextViews and an ImageView)
         // so that it can be shown in the ListView
