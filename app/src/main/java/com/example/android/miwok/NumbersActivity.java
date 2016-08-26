@@ -77,10 +77,17 @@ public class NumbersActivity extends AppCompatActivity {
 
                 Word word = words.get(position);
 
-                Toast.makeText(NumbersActivity.this, "Clicou no item", Toast.LENGTH_SHORT).show();
+                Log.v("NumbersActivity", "Current word: " + word);
 
                 mediaPlayer = MediaPlayer.create(NumbersActivity.this, word.getmAudioResourceId());
                 mediaPlayer.start();
+
+                mediaPlayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
+                    @Override
+                    public void onCompletion(MediaPlayer mediaPlayer) {
+                        Toast.makeText(NumbersActivity.this, "I'm done!", Toast.LENGTH_SHORT).show();
+                    }
+                });
             }
         });
 

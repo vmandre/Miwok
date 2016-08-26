@@ -3,6 +3,7 @@ package com.example.android.miwok;
 import android.media.MediaPlayer;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
@@ -55,10 +56,17 @@ public class ColorsActivity extends AppCompatActivity {
 
                 Word color = colors.get(position);
 
-                Toast.makeText(ColorsActivity.this, "Clicou no item", Toast.LENGTH_SHORT).show();
+                Log.v("ColorsActivity", "Current color: " + color);
 
                 mediaPlayer = MediaPlayer.create(ColorsActivity.this, color.getmAudioResourceId());
                 mediaPlayer.start();
+
+                mediaPlayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
+                    @Override
+                    public void onCompletion(MediaPlayer mediaPlayer) {
+                        Toast.makeText(ColorsActivity.this, "I'm done!", Toast.LENGTH_SHORT).show();
+                    }
+                });
             }
         });
     }
