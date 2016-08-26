@@ -13,7 +13,17 @@ import java.util.ArrayList;
 
 public class FamilyActivity extends AppCompatActivity {
 
-    private MediaPlayer mediaPlayer;
+    private MediaPlayer mMediaPlayer;
+
+    private MediaPlayer.OnCompletionListener mCompletionListener = new MediaPlayer.OnCompletionListener() {
+        @Override
+        public void onCompletion(MediaPlayer mediaPlayer) {
+
+            releaseMediaPlayer();
+
+            Toast.makeText(FamilyActivity.this, "I'm done!", Toast.LENGTH_SHORT).show();
+        }
+    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,16 +71,38 @@ public class FamilyActivity extends AppCompatActivity {
 
                 Log.v("FamilyActivity", "Current member: " + member);
 
-                mediaPlayer = MediaPlayer.create(FamilyActivity.this, member.getmAudioResourceId());
-                mediaPlayer.start();
+                releaseMediaPlayer();
 
-                mediaPlayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
-                    @Override
-                    public void onCompletion(MediaPlayer mediaPlayer) {
-                        Toast.makeText(FamilyActivity.this, "I'm done!", Toast.LENGTH_SHORT).show();
-                    }
-                });
+                mMediaPlayer = MediaPlayer.create(FamilyActivity.this, member.getmAudioResourceId());
+                mMediaPlayer.start();
+
+                mMediaPlayer.setOnCompletionListener(mCompletionListener);
             }
         });
+
+    }
+
+    /**
+     * Clean up the media player by releasing its resources.
+     */
+    private void releaseMediaPlayer() {
+        // If the media player is not null, then it may be currently playing a sound.
+        if (mMediaPlayer != null) {
+            // Regardless of the current state of the media player, release its resources
+            // because we no longer need it.
+            mMediaPlayer.release();
+
+            // Set the media player back to null. For our code, we've decided that
+            // setting the media player to null is an easy way to tell that the media player
+            // is not configured to play an audio file at the moment.
+            mMediaPlayer = null;
+        }
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+
+        releaseMediaPlayer();
     }
 }
